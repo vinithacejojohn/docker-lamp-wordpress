@@ -1,0 +1,26 @@
+version: '2'
+services:
+
+  wordpress:
+    build:
+     context: ./docker/
+     dockerfile: wpdockerfile
+    image: wordpress1
+ # command: docker-php-ext-install mysql
+    volumes:
+       - ./wordpress:/var/www/html
+    links:
+       - mysql:mysql
+    ports:
+       - 80:80
+
+  mysql:
+    image: mysql
+    volumes:
+      - mysql-data:/var/lib/mysql
+    environment:
+       MYSQL_ROOT_PASSWORD: root
+
+volumes:
+  mysql-data:
+    driver: local
